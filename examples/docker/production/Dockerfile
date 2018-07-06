@@ -3,10 +3,7 @@
 # Local Cloud Sparc-Server  
 #
 
-#
-# based on Alpine Node (version 8 is tested, other Version should work as well)
-#
-FROM mhart/alpine-node:7
+FROM ubuntu:18.04
 
 
 # create the Working Directory
@@ -14,16 +11,17 @@ RUN mkdir -p /usr/src/localCloud
 
 # install all dependencies and delete them in ONE single RUN
 # you can split this into different steps, but this will make the Image MUCH larger!
-RUN apk add --no-cache git; \
+RUN apt-get update; \
+    apt-get install -y git nodejs npm; \
     cd /usr/src/localCloud; \
     git clone https://github.com/Brewskey/spark-server.git; \
     cd  /usr/src/localCloud/spark-server; \
-    git checkout c182732cad6075354846f6034076fe987d599994; \
     rm -rf .git; \
     npm install; \
-    apk del git; \
-    npm run prebuild; \
-    npm run build
+    # dirty hack to avoid error on launch
+    mkdir node_modules/spark-protocol/third-party; \
+    echo "[]" > node_modules/spark-protocol/third-party/settings.json
+
 
 
 
