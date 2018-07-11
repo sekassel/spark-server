@@ -40,7 +40,7 @@ export default {
   LOG_LEVEL: (process.env.LOG_LEVEL: any) || 'info',
   LOGIN_ROUTE: '/oauth/token',
   EXPRESS_SERVER_CONFIG: {
-    PORT: 8080,
+    PORT: 80,
     SSL_CERTIFICATE_FILEPATH: null,
     SSL_PRIVATE_KEY_FILEPATH: null,
     USE_SSL: false,
